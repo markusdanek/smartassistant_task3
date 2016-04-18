@@ -14,6 +14,7 @@
       <!-- Returns advisor dummy data  -->
       advisorAPI.getAdvisor = function() {
         var currentTimeStamp = new Date().getTime();
+        console.log('getadvisor')
 
         return {
           name: "SmartAssistantSampleAdvisor",
@@ -77,11 +78,12 @@
     angular.module('AngularJsExercise.controllers', []).
     controller('angularJsExerciseController', function($scope, angularJsServices) {
       $scope.advisor = angularJsServices.getAdvisor();
+      console.log($scope.advisor);
     });
 
     angular.module('AngularJsExercise.filters', [])
       .filter('angularJsExerciseFilter', function() {
-        <!-- implement me -->
+
       });
 
     angular.module('AngularJsExercise.controllers')
@@ -104,24 +106,29 @@
 
 <body>
 
-  <div ng-app="AngularJsExercise" ng-controller="angularJsExerciseController">
+  <div ng-app="AngularJsExercise">
 
     <!-- display pages with questions -->
 
     <!-- advisorPage directive template -->
-    <div ng-repeat="adv in advisor">
-      <advisorPage></advisorPage>
-    </div>
+      <advisor-page page="adv"></advisor-page>
 
-    <script type=text/ng-template id=advisorPage.html>
-      <div class="smrt42-page">
+    <script type="text/ng-template" id="advisorPage.html">
+      <div class="smrt42-page" ng-repeat="page in advisor.pages">
         <div class=”smrt42-page-text”>
-          {{advisor.pageText}}
+          {{page.pageText}}
         </div>
         <div class="smrt42-page-number">
-          {{advisors.pageNum}}
+          {{page.pageNum}}
         </div>
-        <!-- all page questions should be displayed here -->
+      </div>
+      <div class="smrt42-question" ng-repeat="quest in advisor.pages.questions">
+        <div class="smrt42-question-text">
+          {{page.questionText}}
+        </div>
+        <div class="smrt42-question-type">
+          {{page.questionType}}
+        </div>
       </div>
     </script>
   </div>
